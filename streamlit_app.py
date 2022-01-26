@@ -60,7 +60,7 @@ if nav == 'DEMO 1':
                 with st.spinner('Processing...'):
                
                     # T5 uses a max_length of 512 so we cut the article to 512 tokens.
-                    inputs = tokenizer("summarize: " + text, return_tensors="pt", max_length=512, truncation=True)
+                    inputs = tokenizer("summarize: " + s_example, return_tensors="pt", max_length=512, truncation=True)
                     outputs = model.generate(inputs["input_ids"], max_length=300, min_length=20, length_penalty=2.0, num_beams=4,early_stopping=True)
                     t_r = tokenizer.decode(outputs[0]) #################################################################### here I put my function
                     result_t_r = (str(len(t_r)) + ' characters' + ' ('"{:.0%}".format(
