@@ -1,6 +1,5 @@
 import streamlit as st
 import torch
-import pandas as pd
 import time
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
@@ -9,7 +8,7 @@ from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 # SIDEBAR #
  #########
 col1, mid, col2 = st.sidebar.columns([1, 4, 1])
-mid.image('images/Capgemini_logo.png', width=200)
+mid.write('images/logo.png, width=200')
 st.sidebar.markdown("<h3 style='text-align: center;font-family:Ubuntu; font-size:20px;'<p>AI SUMMARIZATION</p></h3>", unsafe_allow_html=True)
 nav = st.sidebar.radio('', ['START', 'DEMO 1', 'DEMO 2', 'more'])
 st.sidebar.write('')
