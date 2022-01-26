@@ -1,16 +1,8 @@
 import streamlit as st
 import torch
-import spacy
 import pandas as pd
 import time
-
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-import en_core_web_sm
-from io import StringIO
-
-
-from spacy import displacy
-import en_core_web_trf
 
 
  #########
