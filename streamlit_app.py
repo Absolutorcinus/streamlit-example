@@ -1,8 +1,9 @@
 import streamlit as st
 import torch
 import time
+import transformers
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-
+import logging
 
  #########
 # SIDEBAR #
@@ -34,22 +35,7 @@ if nav == 'START':
  
 
 if nav == 'DEMO 1':
-    def summarize_it_t5(text, model, tokenizer):
-        start_time = time.time()
-        # T5 uses a max_length of 512 so we cut the article to 512 tokens.
-        inputs = tokenizer("summarize: " + text, return_tensors="pt", max_length=512, truncation=True)
-        outputs = model.generate(inputs["input_ids"], max_length=300, min_length=20, length_penalty=2.0, num_beams=4,
-                                 early_stopping=True)
-        print("[summarize_it_t5 runtime]--- %s seconds ---" % (time.time() - start_time))
-        return (tokenizer.decode(outputs[0]))
-
-    start_time = time.time()
-
-    model = AutoModelForSeq2SeqLM.from_pretrained("t5-base")
-    tokenizer = AutoTokenizer.from_pretrained("t5-base")
-    print("[Loading model&tokenizer runtime]--- %s seconds ---" % (time.time() - start_time))
-
-
+  
     st.markdown(f'<h3 style="text-align: left; color:hsl(194, 85%, 25%); font-size:28px;">Summarize Text</h3>',unsafe_allow_html=True)
     st.text('')
 
@@ -64,13 +50,19 @@ if nav == 'DEMO 1':
             "Use the example below or input your own text in English (between 1,000 and 10,000 characters)",
             value=s_example, max_chars=10000, height=330)
         if st.button('Summarize'):
+      
             if len(input_su) < 1000:
                 #raise the warning
                 st.error('Please enter a text in English of minimum 1,000 characters')
             else:
+                model = AutoModelForSeq2SeqLM.from_pretrained("t5-base")
+                tokenizer = AutoTokenizer.from_pretrained("t5-base")
                 with st.spinner('Processing...'):
-                    print("start")
-                    t_r = summarize_it_t5(input_su,model,tokenizer) #################################################################### here I put my function
+               
+                    # T5 uses a max_length of 512 so we cut the article to 512 tokens.
+                    inputs = tokenizer("summarize: " + text, return_tensors="pt", max_length=512, truncation=True)
+                    outputs = model.generate(inputs["input_ids"], max_length=300, min_length=20, length_penalty=2.0, num_beams=4,early_stopping=True)
+                    t_r = tokenizer.decode(outputs[0]) #################################################################### here I put my function
                     result_t_r = (str(len(t_r)) + ' characters' + ' ('"{:.0%}".format(
                         len(t_r) / len(input_su)) + ' of original content)')
                     print("end")
