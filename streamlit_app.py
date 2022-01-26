@@ -3,7 +3,7 @@ import torch
 import time
 import transformers
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-import logging
+
 
  #########
 # SIDEBAR #
