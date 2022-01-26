@@ -1,4 +1,6 @@
 pandas
 streamlit
 transformers
-pytorch
+torch
+numpy
+spacy
